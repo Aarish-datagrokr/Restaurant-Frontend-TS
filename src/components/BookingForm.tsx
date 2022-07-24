@@ -7,6 +7,8 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
+import './styles/select.css';
+import { grey } from '@material-ui/core/colors';
 
 
 const useStyles = makeStyles((Theme) => ({
@@ -112,7 +114,7 @@ const BookingForm = () => {
                        value={phoneNo} placeholder="Enter phone number" label="Phone number" variant="outlined" fullWidth required />
                   </Grid>
                   <Grid item xs={12}>
-                  <select name="members" value={members} onChange={membersChange} placeholder='Members'>
+                  <select name="members" value={members} onChange={membersChange} placeholder='Members' className='select-dropdown'>
                     <option value='0' selected disabled>
                       Choose Members
                     </option> 

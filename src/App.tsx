@@ -12,11 +12,12 @@ function App() {
   return (
     <Container className="py-4">
         <Row className="justify-content-center">
+        <Card style={{ maxWidth: 510,  padding: "20px 5px", margin: "0 auto", boxShadow: "none"}}>
           <Tabs defaultActiveKey="first" variant='tabs'  className='mb-1 p-0' style={{position:"absolute"}}>
 
               <Tab title="Welcome" eventKey="first" style={{paddingTop:"100pt"}}>
                 <Card>
-              <Typography gutterBottom variant="h3" align="center">
+              <Typography gutterBottom variant="h4" align="center">
                   Welcome to XYZ-Restaurant, We have tables available for maximum 4 people and booking is closed after 8 pm.
               </Typography>
               </Card>
@@ -35,6 +36,7 @@ function App() {
               </Tab>
 
           </Tabs>
+          </Card>
         </Row>
       </Container>
   );
