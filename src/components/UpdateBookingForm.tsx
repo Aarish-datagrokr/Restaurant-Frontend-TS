@@ -68,7 +68,8 @@ const UpdateBookingForm = () => {
                      setReservationTime('');      
          
                     }, (error) => {
-                       setUpdationStatus(error.response.data);
+                      if(!error.response.data.equals("")) setUpdationStatus(error.response.data);
+                      else setUpdationStatus("Something Wrong.");          
                        setPhoneNo('');
                        setMembers(0);
                        setReservationTime('');      
