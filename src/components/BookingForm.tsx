@@ -77,8 +77,7 @@ const BookingForm = () => {
             setMembers(0);
             setReservationTime('');
           }, (error) => {
-            if(!error.response.data.equals("")) setBookingStatus(error.response.data);
-            else setBookingStatus("Something Wrong.");          
+            setBookingStatus(error.response.data);
             setName('');
             setPhoneNo('');
             setMembers(0);
