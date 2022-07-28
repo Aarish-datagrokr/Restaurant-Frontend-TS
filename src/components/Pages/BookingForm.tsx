@@ -1,19 +1,27 @@
 import React,{useState} from 'react';
 import { Grid, makeStyles, TextField, Button, Card, CardContent, Typography, Select, InputLabel } from '@material-ui/core';
 import axios from 'axios';
-import Dialog from "@material-ui/core/Dialog";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
+import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, {AlertProps,AlertColor} from '@mui/material/Alert';
 
-const useStyles = makeStyles((Theme) => ({
-  backDrop: {
-    backdropFilter: "blur(3px)",
-    backgroundColor:'rgba(0,0,30,0.4)'
-  },
-}));
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "rgb(165, 42, 42)"
+    },
+    secondary: {
+      main: 'rgb(245, 222, 179)'
+    }
+  }
+});
 
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const BookingForm = () => {
 
@@ -38,14 +46,13 @@ const BookingForm = () => {
     if(value=='4') setMembers(4);    
   }
 
-  const classes = useStyles();
   const [open,setOpen]=React.useState(false);
+  const [severity,setSeverity]=useState<AlertColor | undefined>(undefined);
   const handleClickToOpen = () => {
     if(phoneNo.length==10) setOpen(true);
   };
   const handleToClose = () => {
     setOpen(false);
-    setBookingStatus("Enter details to book table.");
   };
 
   const handleSubmit = async(event: React.FormEvent) => {
@@ -71,12 +78,14 @@ const BookingForm = () => {
         }, 
         })
           .then((response) => {
+            setSeverity('success');
             setBookingStatus(response.data);  
             setName('');
             setPhoneNo('');
             setMembers(0);
             setReservationTime('');
           }, (error) => {
+            setSeverity('error');
             setBookingStatus(error.response.data);
             setName('');
             setPhoneNo('');
@@ -87,9 +96,10 @@ const BookingForm = () => {
 
 }
     return (
-      <div className="App"> 
+      <div className="App" style={{marginTop: "90pt"}}> 
         <Grid>
-          <Card style={{ maxWidth: 510, maxHeight: "100%" ,padding: "20px 5px", margin: "0 auto", boxShadow: "none" }}>
+        <MuiThemeProvider theme={theme}>
+          <Card style={{ maxWidth: 510 ,padding: "20px 5px", margin: "auto auto", backgroundColor:"wheat" }}>
             <CardContent>
               <Typography gutterBottom variant="h5">
                 Table Booking
@@ -100,12 +110,12 @@ const BookingForm = () => {
               <form onSubmit={(e)=> handleSubmit(e)}>
                 <Grid container spacing={1}>
                   <Grid xs={12} item>
-                  <InputLabel required>Name</InputLabel>
-                    <TextField name="name" onChange={event => setName(event.target.value)} value={name} variant="standard" fullWidth required />
+                  <InputLabel style={{color:"brown", marginBottom:"5px"}} required>Name</InputLabel>
+                    <TextField style={{backgroundColor:"white"}} name="name" onChange={event => setName(event.target.value)} value={name} variant="standard" fullWidth required />
                   </Grid>
                   <Grid item xs={12}>
-                  <InputLabel required>Phone Number</InputLabel>
-                    <TextField name="phoneNo" inputProps={{maxLength:10, minLength:10}} onChange={(event) => {
+                  <InputLabel style={{color:"brown", marginBottom:"5px"}} required>Phone Number</InputLabel>
+                    <TextField style={{backgroundColor:"white"}} name="phoneNo" inputProps={{maxLength:10, minLength:10}} onChange={(event) => {
                        const re = /^[0-9\b]+$/;
                        if (event.target.value === '' || re.test(event.target.value)) {
                       setPhoneNo(event.target.value);
@@ -113,8 +123,8 @@ const BookingForm = () => {
                        value={phoneNo} variant="standard" fullWidth required />
                   </Grid>
                   <Grid item xs={12}>
-                    <InputLabel required>Number Of Members</InputLabel>
-                  <Select name="members" value={members} onChange={membersChange} placeholder='Members' variant="standard" fullWidth >
+                    <InputLabel style={{color:"brown", marginBottom:"5px"}} required>Number Of Members</InputLabel>
+                  <Select style={{backgroundColor:"white"}} name="members" value={members} onChange={membersChange} placeholder='Members' variant="standard" fullWidth >
                     <option value='0' selected disabled>
                     </option> 
                     <option value='1'>1</option>
@@ -124,40 +134,25 @@ const BookingForm = () => {
                   </Select>
                   </Grid>
                     <Grid item xs={12}>
-                    <InputLabel required>Reservation Time</InputLabel>
-                    <TextField name="reservationTime" type="time" onChange={event => setReservationTime(event.target.value)} value={reservationTime} placeholder="Enter reservation time" variant="standard" fullWidth required />
+                    <InputLabel style={{color:"brown", marginBottom:"5px"}} required>Reservation Time</InputLabel>
+                    <TextField style={{backgroundColor:"white"}} name="reservationTime" type="time" onChange={event => setReservationTime(event.target.value)} value={reservationTime} placeholder="Enter reservation time" variant="standard" fullWidth required />
                   </Grid>
                   <Grid item xs={12}>
                     <Button type="submit" variant="contained"  onClick={handleClickToOpen} color="primary" fullWidth>Submit</Button>
                   </Grid>
                 </Grid>
               </form>
-              <Dialog
-                fullWidth
+              <Snackbar
                 open={open}
-                onClose={handleToClose}
-                maxWidth="xs"
-                BackdropProps={{
-                  classes: {
-                    root: classes.backDrop,
-                  },
-                }} >
-          <DialogTitle>{"Notification!"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              {bookingStatus}
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleToClose} 
-                    color="primary" autoFocus>
-              Close
-            </Button>
-          </DialogActions>
-        </Dialog>
-
+                autoHideDuration={6000}
+                onClose={handleToClose}>
+                    <Alert onClose={handleToClose} severity={severity} sx={{ width: '100%' }}>
+                      {bookingStatus}
+                    </Alert>
+              </Snackbar>
             </CardContent>
           </Card>
+          </MuiThemeProvider>
         </Grid>
       </div>
     );
