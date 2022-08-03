@@ -46,7 +46,7 @@ const BookingForm = () => {
     if(value=='4') setMembers(4);    
   }
 
-  const [open,setOpen]=React.useState(false);
+  const [open,setOpen]=useState(false);
   const [severity,setSeverity]=useState<AlertColor | undefined>(undefined);
   const handleClickToOpen = () => {
     if(phoneNo.length==10) setOpen(true);
@@ -107,15 +107,15 @@ const BookingForm = () => {
               <Typography variant="body2" color="textSecondary" component="p" gutterBottom>
                 Fill up the form and we will notify you if the table is available.
             </Typography> <br />
-              <form onSubmit={(e)=> handleSubmit(e)}>
+              <form id='form' onSubmit={(e)=> handleSubmit(e)}>
                 <Grid container spacing={1}>
                   <Grid xs={12} item>
                   <InputLabel style={{color:"brown", marginBottom:"5px"}} required>Name</InputLabel>
-                    <TextField style={{backgroundColor:"white"}} name="name" onChange={event => setName(event.target.value)} value={name} variant="standard" fullWidth required />
+                    <TextField id='name' style={{backgroundColor:"white"}} name="name" onChange={event => setName(event.target.value)} value={name} variant="standard" fullWidth required />
                   </Grid>
                   <Grid item xs={12}>
                   <InputLabel style={{color:"brown", marginBottom:"5px"}} required>Phone Number</InputLabel>
-                    <TextField style={{backgroundColor:"white"}} name="phoneNo" inputProps={{maxLength:10, minLength:10}} onChange={(event) => {
+                    <TextField id='phoneNo' style={{backgroundColor:"white"}} name="phoneNo" inputProps={{maxLength:10, minLength:10}} onChange={(event) => {
                        const re = /^[0-9\b]+$/;
                        if (event.target.value === '' || re.test(event.target.value)) {
                       setPhoneNo(event.target.value);
@@ -124,7 +124,7 @@ const BookingForm = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <InputLabel style={{color:"brown", marginBottom:"5px"}} required>Number Of Members</InputLabel>
-                  <Select style={{backgroundColor:"white"}} name="members" value={members} onChange={membersChange} placeholder='Members' variant="standard" fullWidth >
+                  <Select id='members' style={{backgroundColor:"white"}} name="members" value={members} onChange={membersChange} placeholder='Members' variant="standard" fullWidth >
                     <option value='0' selected disabled>
                     </option> 
                     <option value='1'>1</option>
@@ -135,14 +135,15 @@ const BookingForm = () => {
                   </Grid>
                     <Grid item xs={12}>
                     <InputLabel style={{color:"brown", marginBottom:"5px"}} required>Reservation Time</InputLabel>
-                    <TextField style={{backgroundColor:"white"}} name="reservationTime" type="time" onChange={event => setReservationTime(event.target.value)} value={reservationTime} placeholder="Enter reservation time" variant="standard" fullWidth required />
+                    <TextField id='reservationTime' style={{backgroundColor:"white"}} name="reservationTime" type="time" onChange={event => setReservationTime(event.target.value)} value={reservationTime} placeholder="Enter reservation time" variant="standard" fullWidth required />
                   </Grid>
                   <Grid item xs={12}>
-                    <Button type="submit" variant="contained"  onClick={handleClickToOpen} color="primary" fullWidth>Submit</Button>
+                    <Button id='addButton' type="submit" variant="contained"  onClick={handleClickToOpen} color="primary" fullWidth>Submit</Button>
                   </Grid>
                 </Grid>
               </form>
               <Snackbar
+                id='alert'
                 open={open}
                 autoHideDuration={6000}
                 onClose={handleToClose}>

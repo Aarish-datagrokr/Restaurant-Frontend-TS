@@ -41,7 +41,7 @@ const UpdateBookingForm = () => {
     if(value=='4') setMembers(4);    
   }
 
-      const [open,setOpen]=React.useState(false);
+      const [open,setOpen]=useState(false);
       const [severity,setSeverity]=useState<AlertColor | undefined>(undefined);
       const handleClickToOpen = () => {
         if(phoneNo.length==10) setOpen(true);
@@ -102,11 +102,11 @@ const UpdateBookingForm = () => {
               <Typography variant="body2" color="textSecondary" component="p" gutterBottom>
                 Enter registered phone number and changes you want to update
             </Typography> <br />
-              <form onSubmit={(e)=> handleSubmit(e)}>
+              <form id='form' onSubmit={(e)=> handleSubmit(e)}>
                 <Grid container spacing={1}>
                   <Grid item xs={12}>
                     <InputLabel style={{color:"brown", marginBottom:"5px"}}>Phone Number</InputLabel>
-                  <TextField style={{backgroundColor:"white"}} name="phoneNo" inputProps={{maxLength:10, minLength:10}} onChange={(event) => {
+                  <TextField id='phoneNo' style={{backgroundColor:"white"}} name="phoneNo" inputProps={{maxLength:10, minLength:10}} onChange={(event) => {
                        const re = /^[0-9\b]+$/;
                        if (event.target.value === '' || re.test(event.target.value)) {
                       setPhoneNo(event.target.value);
@@ -115,7 +115,7 @@ const UpdateBookingForm = () => {
                   </Grid>
                   <Grid item xs={12}>
                   <InputLabel style={{color:"brown", marginBottom:"5px"}}>Number Of Members</InputLabel>
-                  <Select style={{backgroundColor:"white"}} name="members" value={members} onChange={membersChange} fullWidth>
+                  <Select id='members' style={{backgroundColor:"white"}} name="members" value={members} onChange={membersChange} fullWidth>
                     <option value='0' selected disabled>
                     </option> 
                     <option value='1'>1</option>
@@ -126,15 +126,16 @@ const UpdateBookingForm = () => {
                   </Grid>
                   <Grid item xs={12}>
                   <InputLabel style={{color:"brown", marginBottom:"5px"}}>Reservation Time</InputLabel>
-                  <TextField style={{backgroundColor:"white"}} name="reservationTime" type="time" onChange={event => setReservationTime(event.target.value)} value={reservationTime} variant="standard" fullWidth required />
+                  <TextField id='reservationTime' style={{backgroundColor:"white"}} name="reservationTime" type="time" onChange={event => setReservationTime(event.target.value)} value={reservationTime} variant="standard" fullWidth required />
                   </Grid>
                   <Grid item xs={12}>
-                    <Button type="submit" variant="contained"  onClick={handleClickToOpen} color="primary" fullWidth>Update</Button>
+                    <Button id='updateButton' type="submit" variant="contained"  onClick={handleClickToOpen} color="primary" fullWidth>Update</Button>
                   </Grid>
   
                 </Grid>
               </form>
               <Snackbar
+                id='alert'
                 open={open}
                 autoHideDuration={6000}
                 onClose={handleToClose}>

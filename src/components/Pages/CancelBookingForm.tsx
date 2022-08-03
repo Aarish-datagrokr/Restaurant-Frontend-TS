@@ -28,7 +28,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     const [cancellationStatus,setCancellationStatus]=useState<string>('Enter details to cancel booking.');
     const [phoneNo,setPhoneNo]=useState<string>('');
     
-    const [open,setOpen]=React.useState(false);
+    const [open,setOpen]=useState(false);
     const [severity,setSeverity]=useState<AlertColor | undefined>(undefined);
     const handleClickToOpen = () => {
       if(phoneNo.length==10) setOpen(true);
@@ -70,11 +70,11 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
               <Typography variant="body2" color="textSecondary" component="p" gutterBottom>
                 Enter your registered phone number
             </Typography> <br />
-              <form onSubmit={handleSubmit}>
+              <form id='form' onSubmit={handleSubmit}>
                 <Grid container spacing={1}>
                   <Grid item xs={12}>
                   <InputLabel style={{color:"brown", marginBottom:"5px"}}>Phone Number</InputLabel>
-                  <TextField style={{backgroundColor:"white"}} name="phoneNo" inputProps={{maxLength:10, minLength:10}} onChange={(event) => {
+                  <TextField id='phoneNo' style={{backgroundColor:"white"}} name="phoneNo" inputProps={{maxLength:10, minLength:10}} onChange={(event) => {
                        const re = /^[0-9\b]+$/;
                        if (event.target.value === '' || re.test(event.target.value)) {
                       setPhoneNo(event.target.value);
@@ -82,11 +82,12 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
                        value={phoneNo} variant="standard" fullWidth required />
                   </Grid>
                   <Grid item xs={12}>
-                    <Button type="submit" variant="contained" onClick={handleClickToOpen} color="primary" fullWidth>Delete</Button>
+                    <Button id='deleteButton' type="submit" variant="contained" onClick={handleClickToOpen} color="primary" fullWidth>Delete</Button>
                   </Grid>  
                 </Grid>
               </form>
               <Snackbar
+                id='alert'
                 open={open}
                 autoHideDuration={6000}
                 onClose={handleToClose}>
