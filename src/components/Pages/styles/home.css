@@ -2,15 +2,15 @@
     color: whitesmoke;
     background-color: #55331b;
     font-size: 60pt;
-    font-weight: bold;
+    font-weight: lighter;
     width: fit-content;
 }
 
 .about {
-    color: #55331b;
-    background-color: cornsilk;
+    color: white;
     font-size: 30pt;
-    font-weight:lighter;
+    border: 1px solid whitesmoke;
+    font-weight:normal;
     width: fit-content;
 }
 
@@ -41,11 +41,11 @@
 }
 
 .about {
-    color: #55331b;
-    background-color: cornsilk;
+    color: whitesmoke;
     font-size: 25pt;
     font-weight:lighter;
     width: fit-content;
+    border: 1px solid white
 }
 
 .typical {
